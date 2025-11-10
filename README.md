@@ -2,79 +2,89 @@
 
 **Click To Preview:** <a href="https://www.figma.com/proto/tZUzonM6y9wKvqjLfPP5Ub/Empirehouse-Production-Prototype?t=dxBQboyED6sHpvCq-1">![EmpireHouse Productions Website Screenshot](Images/Empirehouse_Production_Prototype.jpeg)</a>
 
-## Overview
+# 🎬 EmpireHouse Booking & Rental System
 
-**EmpireHouse Productions** is a premier event production company specializing in **sound, lighting, stage design, and audiovisual (AV) solutions**. We provide state-of-the-art production services for concerts, corporate events, weddings, theatrical performances, and more. Our team is dedicated to delivering immersive and seamless experiences by leveraging cutting-edge technology and professional expertise.
+**Team Name:** Web Wizards  
+**Team Members:** Asemahle Nonkwelo & Makaphile Jula  
+**Client:** Empire House Productions  
+**Duration:** August – November 2025  
+**Process Model:** Agile (3 Sprints managed in Azure DevOps)
 
-### Purpose
+---
 
-EmpireHouse Productions was created to revolutionize event production by offering top-tier **sound engineering, lighting effects, stage setup, and AV solutions**. We ensure that every event—whether big or small—receives high-quality production value, enhancing both aesthetics and functionality.
+## 🎯 Project Purpose
+EmpireHouse Productions relied on a manual booking process for studios and equipment, resulting in scheduling conflicts, late payments, and limited visibility into daily operations.  
+This project aims to replace that system with a **modern web and mobile solution** that automates studio bookings, equipment rentals, payments, and invoice management.
 
-## Features
+---
 
-- 🎤 **Custom Sound Systems:** High-fidelity audio setups tailored for different venues and event sizes.
-- 🎭 **Advanced Lighting Solutions:** Dynamic lighting effects, intelligent lighting controls, and custom-designed atmospheres.
-- 🎬 **Professional Stage Design:** Modular and customizable stage setups for concerts, conferences, and performances.
-- 📺 **High-Quality Audiovisual (AV) Integration:** Seamless projection mapping, LED screens, and video playback.
-- 📅 **Event Planning & Execution:** Full-service event production, including pre-event planning, setup, live operation, and teardown.
-- 🎥 **Live Streaming Capabilities:** High-definition streaming for virtual and hybrid events.
-- 📲 **Mobile-Friendly Booking System:** Easy online scheduling and booking through the website.
-- 🖥 **Client Dashboard:** Manage bookings, request quotes, and review past projects.
+## ⚙️ System Overview
+The EmpireHouse digital system consists of:
+- **Web Admin Dashboard:** Manage studios, bookings, payments, and reports.  
+- **Mobile App (Kotlin + Firebase):** Allows clients to book studios and rent equipment.  
+- **Secure Payment Integration (PayFast Sandbox):** Processes online payments and auto-generates invoices.  
+- **Firebase Firestore Database:** Real-time updates for bookings, users, and invoices.  
+- **Azure DevOps Integration:** Used for boards, sprints, repos, pipelines, and testing.
 
-## Technologies Used
+---
 
-```yaml
-Frontend:  HTML5, CSS3, JavaScript, React.js
-Backend:   Node.js, Express.js
-Database:  MongoDB
-Auth:      Firebase Auth / JWT
-Hosting:   Vercel / Netlify
-Payments:  Visa / PayPal
-```
+## 🧩 Core Modules
+| Module | Description |
+|---------|-------------|
+| **User Management** | Handles registration, login, and authentication using Firebase. |
+| **Studio Booking** | Users can select studios, book dates/times, and receive confirmations. |
+| **Equipment Rental** | Enables users to add and rent additional equipment for sessions. |
+| **Payment & Invoice Automation** | Integrates PayFast sandbox for online payments and automatic invoice creation. |
+| **Admin Dashboard** | Displays analytics, manages studios, and monitors financials. |
 
-## Installation
+---
 
-To set up the project locally, follow these steps:
+## 💻 Technologies Used
+| Area | Tools / Tech Stack |
+|------|--------------------|
+| **Frontend (Web)** | HTML, CSS, JavaScript / PHP |
+| **Mobile App** | Kotlin, Firebase SDK |
+| **Backend & Database** | Firebase Firestore, Firebase Authentication |
+| **Hosting** | Firebase Hosting |
+| **Payment Gateway** | PayFast Sandbox |
+| **DevOps** | Azure DevOps (Boards, Repos, Pipelines, Test Plans) |
 
-```bash
-# Clone the repository
-git clone https://github.com/your-username/empirehouse-productions.git
+---
 
-# Navigate to the project directory
-cd empirehouse-productions
+## 🗓️ Agile Development Summary
+| Sprint | Focus Area | Status |
+|---------|-------------|--------|
+| **Sprint 1** | Setup, authentication, and booking module | ✅ Done |
+| **Sprint 2** | Equipment rental, payment, and invoice generation | ✅ Done |
+| **Sprint 3** | Admin dashboard, reports, and final testing | ✅ Done |
 
-# Install dependencies
-npm install
+All sprints, issues, and tasks were tracked, assigned, and completed in Azure DevOps to reflect active Agile collaboration.
 
-# Start the development server
-npm start
-```
+---
 
-## Usage
+## 🚀 Key Outcomes
+- Automated end-to-end booking and payment process.  
+- Real-time synchronization between web and mobile.  
+- Automatic invoice generation and secure cloud storage.  
+- Improved reliability and reduced manual errors.  
+- Full traceability from Epics → Issues → Tasks → Commits in DevOps.
 
-1. **Browse Services:** Explore our sound, lighting, stage, and AV services.
-2. **Request a Quote:** Submit details about your event to get a customized quote.
-3. **Book a Service:** Secure your event production services through our online booking system.
-4. **Manage Your Events:** Log in to view your bookings, invoices, and past projects.
-5. **Live Event Support:** Our team provides real-time support during your event to ensure flawless execution.
+---
 
-## Contributors
+## 🧠 Project Reflection
+Through this project, we learned to integrate Agile principles with real development tools such as Azure DevOps, Firebase, and PayFast.  
+Working collaboratively, we achieved a complete CI/CD workflow using Boards, Repos, Pipelines, and Test Plans — strengthening our teamwork, problem-solving, and technical deployment skills.
 
+---
 
-- **Lungelwa Mazibuko** (https://github.com/LungelwaMazibuko) - Lead Developer
-- **Mzwandile Dlamini** (https://github.com/ST10295952) - UI/UX Designer
-- **Asemahle Nonkwelo** (https://github.com/AsemahleNonkwelo) - Project Manager
-- **Makaphile Jula** (https://github.com/Makaphile) - Bussiness Analyst
-- **Vulemusini** (https://github.com/Velemuseni) - Content Creator
-- **Mongezi** (https://github.com/Mongezi2003) - Quality Assurance
+### 📸 Evidence Captured
+- Boards (Epics, Issues, Tasks marked Done)  
+- Sprints (1–3) with visible completion  
+- Pipelines build history  
+- Test Plan execution results  
+- Repository commits and README documentation
 
+---
 
-
-## License
-
-This project is licensed under the [MIT License](LICENSE).
-
-## Contact
-
-For any questions, service inquiries, or bookings, visit our website at [**EmpireHouse Productions Official Site**](YOUR_WEBSITE_URL).
+© 2025 *Web Wizards — EmpireHouse Productions Project*
 
