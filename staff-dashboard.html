@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Dashboard - Empire House</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-bg: #1A1A1A;
+            --secondary-bg: #2A2A2A;
+            --accent-gold: #D4AF37;
+            --accent-red: #8B0000;
+            --text-white: #FFFFFF;
+            --text-light: #CCCCCC;
+            --text-gray: #888888;
+            --border-color: #3A3A3A;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --info: #3B82F6;
+            --error: #EF4444;
+        }
+
+        body {
+            background-color: var(--primary-bg);
+            color: var(--text-white);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--primary-bg);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--accent-red);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-white);
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: var(--text-white);
+        }
+
+        .logo-subtitle {
+            font-size: 0.875rem;
+            color: var(--text-light);
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .icon-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 20px;
+            background: transparent;
+            border: none;
+            color: var(--text-white);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s ease;
+        }
+
+        .icon-btn:hover {
+            background: var(--secondary-bg);
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 70px;
+            padding: 24px 0;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 24px;
+        }
+
+        .header-text h1 {
+            font-size: 2.25rem;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .header-text p {
+            color: var(--text-light);
+            font-size: 1rem;
+        }
+
+        .dashboard-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--accent-red);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-white);
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            background: var(--secondary-bg);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .stat-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-white);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--success);
+        }
+
+        .stat-content h2 {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        .stat-content p {
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        /* Bookings Section */
+        .section-card {
+            background: var(--secondary-bg);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            margin-bottom: 24px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .view-all-btn {
+            padding: 8px 12px;
+            background: var(--primary-bg);
+            color: var(--accent-red);
+            border: none;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .view-all-btn:hover {
+            background: var(--border-color);
+        }
+
+        .table-header {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 16px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 12px;
+        }
+
+        .table-header span {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-light);
+            text-transform: uppercase;
+        }
+
+        .booking-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 16px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-color);
+            align-items: center;
+        }
+
+        .client-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .client-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .client-details h4 {
+            font-weight: 500;
+            margin-bottom: 2px;
+        }
+
+        .client-details p {
+            font-size: 0.75rem;
+            color: var(--text-light);
+        }
+
+        .service-name, .booking-time {
+            font-weight: 500;
+        }
+
+        .status-badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .status-confirmed {
+            background: var(--success);
+            color: var(--text-white);
+        }
+
+        .status-pending {
+            background: var(--warning);
+            color: var(--text-white);
+        }
+
+        .status-cancelled {
+            background: var(--error);
+            color: var(--text-white);
+        }
+
+        /* Quick Actions */
+        .actions-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .action-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 16px;
+            background: var(--accent-red);
+            color: var(--text-white);
+            border: none;
+            border-radius: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            height: 48px;
+        }
+
+        .action-btn:hover {
+            background: #A52A2A;
+        }
+
+        .action-btn.orange {
+            background: var(--warning);
+        }
+
+        .action-btn.orange:hover {
+            background: #D97706;
+        }
+
+        .action-btn.green {
+            background: var(--success);
+        }
+
+        .action-btn.green:hover {
+            background: #059669;
+        }
+
+        .action-btn.blue {
+            background: var(--info);
+        }
+
+        .action-btn.blue:hover {
+            background: #2563EB;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .actions-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .booking-row {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+
+            .table-header {
+                display: none;
+            }
+
+            .dashboard-header {
+                flex-direction: column;
+                gap: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo-section">
+                    <div class="logo-icon">
+                        <span>🏢</span>
+                    </div>
+                    <div class="logo-text">
+                        <div class="logo-title">Empire House</div>
+                        <div class="logo-subtitle">Staff Dashboard</div>
+                    </div>
+                </div>
+                <div class="nav-actions">
+                    <button class="icon-btn" onclick="location.href='notifications.html'">
+                        <span>🔔</span>
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="container">
+            <!-- Dashboard Header -->
+            <div class="dashboard-header">
+                <div class="header-text">
+                    <h1>Staff Dashboard</h1>
+                    <p>Real-time studio operations overview</p>
+                </div>
+                <div class="dashboard-icon">
+                    <span>📊</span>
+                </div>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="stats-grid">
+                <!-- Today's Bookings -->
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon" style="background: var(--accent-red);">
+                            <span>📅</span>
+                        </div>
+                        <div class="status-dot"></div>
+                    </div>
+                    <div class="stat-content">
+                        <h2>24</h2>
+                        <p>Today's Bookings</p>
+                    </div>
+                </div>
+
+                <!-- Active Clients -->
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon" style="background: var(--success);">
+                            <span>👥</span>
+                        </div>
+                        <div class="status-dot"></div>
+                    </div>
+                    <div class="stat-content">
+                        <h2>187</h2>
+                        <p>Active Clients</p>
+                    </div>
+                </div>
+
+                <!-- Equipment Maintenance -->
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon" style="background: var(--warning);">
+                            <span>🔧</span>
+                        </div>
+                        <div class="status-dot" style="background: var(--warning);"></div>
+                    </div>
+                    <div class="stat-content">
+                        <h2>3</h2>
+                        <p>Equipment Maintenance</p>
+                    </div>
+                </div>
+
+                <!-- Monthly Revenue -->
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon" style="background: var(--info);">
+                            <span>💰</span>
+                        </div>
+                        <div class="status-dot"></div>
+                    </div>
+                    <div class="stat-content">
+                        <h2>$12,450</h2>
+                        <p>Monthly Revenue</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Bookings -->
+            <div class="section-card">
+                <div class="section-header">
+                    <h2 class="section-title">Recent Bookings</h2>
+                    <button class="view-all-btn">View All</button>
+                </div>
+
+                <div class="table-header">
+                    <span>CLIENT</span>
+                    <span>SERVICE</span>
+                    <span>TIME</span>
+                    <span>STATUS</span>
+                </div>
+
+                <!-- Booking 1 -->
+                <div class="booking-row">
+                    <div class="client-info">
+                        <div class="client-avatar" style="background-image: url('https://images.unsplash.com/photo-1612310595736-9e2a8c1d676a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NTYyMDF8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NjE4MjgyNTl8&ixlib=rb-4.1.0&q=80&w=1080');"></div>
+                        <div class="client-details">
+                            <h4>Sarah Johnson</h4>
+                            <p>sarah.j@email.com</p>
+                        </div>
+                    </div>
+                    <div class="service-name">Studio Recording</div>
+                    <div class="booking-time">2:30 PM</div>
+                    <div class="status-badge status-confirmed">Confirmed</div>
+                </div>
+
+                <!-- Booking 2 -->
+                <div class="booking-row">
+                    <div class="client-info">
+                        <div class="client-avatar" style="background-image: url('https://images.unsplash.com/photo-1600818272779-cfa6145222f0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NTYyMDF8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NjE4MjgyNTl8&ixlib=rb-4.1.0&q=80&w=1080');"></div>
+                        <div class="client-details">
+                            <h4>Mike Chen</h4>
+                            <p>mike.chen@email.com</p>
+                        </div>
+                    </div>
+                    <div class="service-name">Mixing Session</div>
+                    <div class="booking-time">3:00 PM</div>
+                    <div class="status-badge status-pending">Pending</div>
+                </div>
+
+                <!-- Booking 3 -->
+                <div class="booking-row">
+                    <div class="client-info">
+                        <div class="client-avatar" style="background-image: url('https://images.unsplash.com/photo-1741392076269-471898558663?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NTYyMDF8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NjE4MjgyNTl8&ixlib=rb-4.1.0&q=80&w=1080');"></div>
+                        <div class="client-details">
+                            <h4>Emma Davis</h4>
+                            <p>emma.d@email.com</p>
+                        </div>
+                    </div>
+                    <div class="service-name">Vocal Recording</div>
+                    <div class="booking-time">4:15 PM</div>
+                    <div class="status-badge status-confirmed">Confirmed</div>
+                </div>
+
+                <!-- Booking 4 -->
+                <div class="booking-row">
+                    <div class="client-info">
+                        <div class="client-avatar" style="background-image: url('https://images.unsplash.com/photo-1621760736963-6aa6412b58ce?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NTYyMDF8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NjE4MjgyNjB8&ixlib=rb-4.1.0&q=80&w=1080');"></div>
+                        <div class="client-details">
+                            <h4>Alex Rodriguez</h4>
+                            <p>alex.r@email.com</p>
+                        </div>
+                    </div>
+                    <div class="service-name">Mastering</div>
+                    <div class="booking-time">5:30 PM</div>
+                    <div class="status-badge status-cancelled">Cancelled</div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="section-card">
+                <div class="section-header">
+                    <h2 class="section-title">Quick Actions</h2>
+                </div>
+                <div class="actions-grid">
+                    <button class="action-btn" onclick="location.href='booking.html'">
+                        <span>➕</span>
+                        Add Booking
+                    </button>
+                    <button class="action-btn orange" onclick="location.href='rentals.html'">
+                        <span>🔧</span>
+                        Check Equipment
+                    </button>
+                    <button class="action-btn green" onclick="location.href='profile.html'">
+                        <span>👥</span>
+                        Client Management
+                    </button>
+                    <button class="action-btn blue" onclick="location.href='notifications.html'">
+                        <span>📊</span>
+                        Generate Report
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simple navigation and interaction handlers
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add any dashboard-specific functionality here
+            console.log('Staff Dashboard loaded');
+            
+            // Example: Refresh stats every 30 seconds
+            setInterval(() => {
+                // In a real app, this would fetch updated data from the server
+                console.log('Refreshing dashboard data...');
+            }, 30000);
+        });
+    </script>
+</body>
+</html>

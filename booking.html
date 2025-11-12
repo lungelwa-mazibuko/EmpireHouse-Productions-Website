@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Studio - Empire House Productions</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-bg: #1A1A1A;
+            --secondary-bg: #2A2A2A;
+            --accent-gold: #D4AF37;
+            --accent-red: #8B0000;
+            --text-white: #FFFFFF;
+            --text-light: #CCCCCC;
+            --text-gray: #888888;
+            --border-color: #3A3A3A;
+            --alternate: #555555;
+        }
+
+        body {
+            background-color: var(--primary-bg);
+            color: var(--text-white);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--secondary-bg);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .back-button {
+            background: none;
+            border: none;
+            color: var(--text-white);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        .logo {
+            font-size: 1.375rem;
+            font-weight: 600;
+            color: var(--text-white);
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 70px;
+            padding: 1.5rem 0;
+        }
+
+        /* Booking Card */
+        .booking-card {
+            background: var(--secondary-bg);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Progress Section */
+        .progress-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .progress-text {
+            color: var(--text-light);
+            font-size: 0.75rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .progress-bar {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .progress-step {
+            flex: 1;
+            height: 4px;
+            border-radius: 2px;
+        }
+
+        .step-active {
+            background: var(--accent-red);
+        }
+
+        .step-inactive {
+            background: var(--alternate);
+        }
+
+        .step-labels {
+            display: flex;
+            gap: 8px;
+        }
+
+        .step-label {
+            flex: 1;
+            font-size: 0.6875rem;
+            text-align: center;
+        }
+
+        .step-active-label {
+            color: var(--accent-red);
+            font-weight: 600;
+        }
+
+        .step-inactive-label {
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        /* Form Section */
+        .form-section h2 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1.25rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-white);
+            font-weight: 600;
+        }
+
+        .select-wrapper {
+            position: relative;
+            width: 100%;
+        }
+
+        .form-select {
+            width: 100%;
+            height: 56px;
+            padding: 0 16px;
+            background: var(--primary-bg);
+            border: 1px solid var(--alternate);
+            border-radius: 12px;
+            color: var(--text-white);
+            font-size: 1rem;
+            appearance: none;
+            cursor: pointer;
+        }
+
+        .select-arrow {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+            pointer-events: none;
+        }
+
+        .form-select:focus {
+            outline: none;
+            border-color: var(--accent-gold);
+        }
+
+        /* Button Section */
+        .button-section {
+            display: flex;
+            gap: 16px;
+            margin-top: 1.5rem;
+        }
+
+        .btn {
+            flex: 1;
+            height: 48px;
+            border: none;
+            border-radius: 12px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-cancel {
+            background: var(--primary-bg);
+            color: var(--text-light);
+            border: 2px solid var(--alternate);
+        }
+
+        .btn-cancel:hover {
+            background: var(--alternate);
+            color: var(--text-white);
+        }
+
+        .btn-next {
+            background: var(--accent-red);
+            color: var(--text-white);
+        }
+
+        .btn-next:hover {
+            background: #A52A2A;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .booking-card {
+                padding: 1rem;
+            }
+
+            .button-section {
+                flex-direction: column;
+            }
+
+            .step-labels {
+                font-size: 0.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <button class="back-button" onclick="location.href='index.html'">←</button>
+                <div class="logo">EmpireHouse</div>
+                <div style="width: 40px;"></div> <!-- Spacer for balance -->
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <div class="booking-card">
+                <!-- Progress Section -->
+                <div class="progress-section">
+                    <div class="progress-text">Step 1 of 3</div>
+                    <div class="progress-bar">
+                        <div class="progress-step step-active"></div>
+                        <div class="progress-step step-inactive"></div>
+                        <div class="progress-step step-inactive"></div>
+                    </div>
+                    <div class="step-labels">
+                        <div class="step-label step-active-label">Select Service</div>
+                        <div class="step-label step-inactive-label">Date & Time</div>
+                        <div class="step-label step-inactive-label">Payment</div>
+                    </div>
+                </div>
+
+                <!-- Form Section -->
+                <div class="form-section">
+                    <h2>Select Your Service</h2>
+                    
+                    <form id="bookingForm">
+                        <!-- Service Type -->
+                        <div class="form-group">
+                            <label class="form-label">Service Type</label>
+                            <div class="select-wrapper">
+                                <select class="form-select" id="serviceType" required>
+                                    <option value="" disabled selected>Choose service type</option>
+                                    <option value="studio-recording">Studio Recording</option>
+                                    <option value="mixing-mastering">Mixing & Mastering</option>
+                                    <option value="music-production">Music Production</option>
+                                    <option value="vocal-recording">Vocal Recording</option>
+                                    <option value="podcast-recording">Podcast Recording</option>
+                                </select>
+                                <div class="select-arrow">▼</div>
+                            </div>
+                        </div>
+
+                        <!-- Studio Type -->
+                        <div class="form-group">
+                            <label class="form-label">Studio Type</label>
+                            <div class="select-wrapper">
+                                <select class="form-select" id="studioType" required>
+                                    <option value="" disabled selected>Choose studio type</option>
+                                    <option value="studio-a">Studio A - Premium</option>
+                                    <option value="studio-b">Studio B - Standard</option>
+                                    <option value="studio-c">Studio C - Vocal Booth</option>
+                                    <option value="studio-d">Studio D - Live Room</option>
+                                </select>
+                                <div class="select-arrow">▼</div>
+                            </div>
+                        </div>
+
+                        <!-- Sound Engineer -->
+                        <div class="form-group">
+                            <label class="form-label">Sound Engineer</label>
+                            <div class="select-wrapper">
+                                <select class="form-select" id="soundEngineer" required>
+                                    <option value="" disabled selected>Choose sound engineer</option>
+                                    <option value="marcus">Marcus Johnson - Senior</option>
+                                    <option value="sarah">Sarah Chen - Lead</option>
+                                    <option value="david">David Rodriguez - Specialist</option>
+                                    <option value="emily">Emily Thompson - Junior</option>
+                                    <option value="none">No Engineer Required</option>
+                                </select>
+                                <div class="select-arrow">▼</div>
+                            </div>
+                        </div>
+
+                        <!-- Session Duration -->
+                        <div class="form-group">
+                            <label class="form-label">Session Duration</label>
+                            <div class="select-wrapper">
+                                <select class="form-select" id="sessionDuration" required>
+                                    <option value="" disabled selected>Choose session duration</option>
+                                    <option value="2-hours">2 Hours - $150</option>
+                                    <option value="4-hours">4 Hours - $280</option>
+                                    <option value="6-hours">6 Hours - $400</option>
+                                    <option value="8-hours">8 Hours - $520</option>
+                                    <option value="full-day">Full Day (10 Hours) - $650</option>
+                                </select>
+                                <div class="select-arrow">▼</div>
+                            </div>
+                        </div>
+
+                        <!-- Buttons -->
+                        <div class="button-section">
+                            <button type="button" class="btn btn-cancel" onclick="location.href='index.html'">Cancel</button>
+                            <button type="button" class="btn btn-next" onclick="proceedToNextStep()">Next: Date & Time</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Form handling and validation
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('bookingForm');
+            const nextButton = document.querySelector('.btn-next');
+            
+            // Add change event listeners to all selects
+            const selects = form.querySelectorAll('select');
+            selects.forEach(select => {
+                select.addEventListener('change', function() {
+                    validateForm();
+                });
+            });
+
+            function validateForm() {
+                let isValid = true;
+                
+                selects.forEach(select => {
+                    if (!select.value) {
+                        isValid = false;
+                    }
+                });
+
+                // Enable/disable next button based on validation
+                if (isValid) {
+                    nextButton.disabled = false;
+                    nextButton.style.opacity = '1';
+                    nextButton.style.cursor = 'pointer';
+                } else {
+                    nextButton.disabled = true;
+                    nextButton.style.opacity = '0.6';
+                    nextButton.style.cursor = 'not-allowed';
+                }
+                
+                return isValid;
+            }
+
+            // Initialize form validation
+            validateForm();
+        });
+
+        function proceedToNextStep() {
+            // Collect form data
+            const formData = {
+                serviceType: document.getElementById('serviceType').value,
+                studioType: document.getElementById('studioType').value,
+                soundEngineer: document.getElementById('soundEngineer').value,
+                sessionDuration: document.getElementById('sessionDuration').value
+            };
+
+            // Validate form
+            let isValid = true;
+            Object.values(formData).forEach(value => {
+                if (!value) isValid = false;
+            });
+
+            if (!isValid) {
+                alert('Please fill in all fields before proceeding.');
+                return;
+            }
+
+            // Store booking data in sessionStorage
+            sessionStorage.setItem('bookingData', JSON.stringify(formData));
+            
+            // Redirect to next step (date & time selection)
+            // For now, redirect to payments page as per your Flutter Flow code
+            window.location.href = 'payments.html';
+        }
+
+        // Load previously saved data if available
+        window.addEventListener('load', function() {
+            const savedData = sessionStorage.getItem('bookingData');
+            if (savedData) {
+                const formData = JSON.parse(savedData);
+                document.getElementById('serviceType').value = formData.serviceType || '';
+                document.getElementById('studioType').value = formData.studioType || '';
+                document.getElementById('soundEngineer').value = formData.soundEngineer || '';
+                document.getElementById('sessionDuration').value = formData.sessionDuration || '';
+            }
+        });
+    </script>
+</body>
+</html>

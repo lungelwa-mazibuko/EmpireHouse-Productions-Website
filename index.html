@@ -1,71 +1,630 @@
-!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Empire House Productions</title>
-</head>
-<body>
-    <div class="navbar">
-        <div>Empire House Productions</div>
-        <div>
-            <a href="#">Home</a>
-            <a href="#">Products</a>
-            <a href="#">Pricing</a>
-            <a href="#">About Us</a>
-        </div>
-        <div>
-            <a href="#">Sign In</a>
-            <button class="cta-button">Contact Sales</button>
-        </div>
-    </div>
-    
-    <div class="hero-section">
-        <h1>Offering you the best in the market</h1>
-        <p>Join the growing number of event organizers who trust us...</p>
-        <input type="email" placeholder="Email Address"> 
-        <button class="cta-button">Start Now</button>
-        <div class="image-placeholder">IMAGE</div>
-    </div>
-    
-    <h3>Trusted by</h3>
-    <div class="trusted-section">
-        <div>image</div>
-        <div>image</div>
-        <div>image</div>
-    </div>
-    
-    <div class="hero-section">
-        <h2>Empowering Your Events with Cutting-Edge Cameras...</h2>
-        <p>Rent high-quality cameras and lighting to elevate your event...</p>
-        <button class="cta-button">Start with Payments</button>
-        <div class="image-placeholder">IMAGE</div>
-    </div>
-</body>
-</html>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title></title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Empire House Productions</title>
+    <script type="module">
+        // Firebase configuration
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-analytics.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCgB3Gi-KbzhOln4F5RQGQbb1d2Lx2Y5EQ",
+            authDomain: "empire-house-productions.firebaseapp.com",
+            projectId: "empire-house-productions",
+            storageBucket: "empire-house-productions.firebasestorage.app",
+            messagingSenderId: "491578812797",
+            appId: "1:491578812797:web:57e61edb7e7d6ff3a60414",
+            measurementId: "G-2N04H460SP"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-bg: #1A1A1A;
+            --secondary-bg: #2A2A2A;
+            --accent-gold: #D4AF37;
+            --accent-red: #8B0000;
+            --text-white: #FFFFFF;
+            --text-light: #CCCCCC;
+            --text-gray: #888888;
+            --border-color: #3A3A3A;
+        }
+
+        body {
+            background-color: var(--primary-bg);
+            color: var(--text-white);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--primary-bg);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            height: 70px;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 4px;
+            background-image: url('https://images.unsplash.com/photo-1624895036835-6e7880ed118d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NTYyMDF8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NjE4MzQzMjV8&ixlib=rb-4.1.0&q=80&w=1080');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent-gold);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .nav-btn {
+            padding: 8px 16px;
+            background: transparent;
+            border: 1px solid var(--accent-gold);
+            color: var(--text-white);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-btn:hover {
+            background: var(--accent-gold);
+            color: var(--primary-bg);
+        }
+
+        .nav-btn.primary {
+            background: var(--accent-red);
+            border-color: var(--accent-red);
+        }
+
+        .nav-btn.primary:hover {
+            background: #A52A2A;
+            border-color: #A52A2A;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), 
+                        url('https://images.unsplash.com/photo-1707690614050-c0ff0b536ad3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NTYyMDF8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NjE4MzQzMjV8&ixlib=rb-4.1.0&q=80&w=1080');
+            background-size: cover;
+            background-position: center;
+            height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            margin-top: 70px;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 2rem;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            color: var(--text-white);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            margin-bottom: 2.5rem;
+            line-height: 1.8;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 16px 32px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--accent-red);
+            color: var(--text-white);
+            height: 56px;
+        }
+
+        .btn-primary:hover {
+            background: #A52A2A;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--accent-gold);
+            border: 2px solid var(--accent-gold);
+            height: 48px;
+            padding: 12px 24px;
+        }
+
+        .btn-secondary:hover {
+            background: var(--accent-gold);
+            color: var(--primary-bg);
+        }
+
+        .btn-outline {
+            background: rgba(0,0,0,0.4);
+            color: var(--text-white);
+            border: 1px solid var(--text-white);
+            height: 48px;
+            padding: 12px 24px;
+        }
+
+        .btn-outline:hover {
+            background: var(--text-white);
+            color: var(--primary-bg);
+        }
+
+        /* Stats Section */
+        .stats {
+            background: var(--secondary-bg);
+            padding: 3rem 0;
+        }
+
+        .stats-container {
+            background: var(--secondary-bg);
+            padding: 12px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            font-size: 2.25rem;
+            color: var(--accent-gold);
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .stat-item p {
+            color: var(--text-white);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Services Section */
+        .services {
+            padding: 4rem 0;
+            background: var(--primary-bg);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.25rem;
+            margin-bottom: 1rem;
+            color: var(--text-white);
+            font-weight: bold;
+        }
+
+        .section-header p {
+            color: var(--text-light);
+            font-size: 1.125rem;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .service-card {
+            background: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: transform 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .service-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--accent-gold);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            color: var(--primary-bg);
+            font-size: 2rem;
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-white);
+            font-weight: 600;
+        }
+
+        .service-card p {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .service-price {
+            font-size: 1.25rem;
+            color: var(--accent-gold);
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-list {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .feature-list li {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+        }
+
+        .feature-list li::before {
+            content: "✓";
+            color: var(--accent-gold);
+            font-weight: bold;
+        }
+
+        .service-btn {
+            width: 100%;
+            padding: 8px;
+            background: var(--accent-red);
+            color: var(--text-white);
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            height: 40px;
+        }
+
+        .service-btn:hover {
+            background: #A52A2A;
+        }
+
+        /* Testimonials Section */
+        .testimonials {
+            padding: 4rem 0;
+            background: var(--secondary-bg);
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .testimonial-card {
+            background: var(--primary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .stars {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 1rem;
+        }
+
+        .star {
+            color: var(--accent-gold);
+            font-size: 1.25rem;
+        }
+
+        .testimonial-text {
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .author-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-image: url('https://images.unsplash.com/photo-1593628525442-f94a810619e0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NTYyMDF8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NjE4MzQzMjV8&ixlib=rb-4.1.0&q=80&w=1080');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .author-info h4 {
+            color: var(--text-white);
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .author-info p {
+            color: var(--text-light);
+            font-size: 0.875rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .nav-buttons {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+        }
+    </style>
 </head>
 <body>
+    <!-- Header -->
     <header>
-        <img src="#" id="company logo image">
-        <nav>
-            <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Products</a></li>
-                <li><a href="#">Pricing</a></li>
-                <li><a href="#">About us</a></li>
-                <li><a href="#">Sign In</a></li>
-                <li><a href="#">Contact Sales</a></li>
-            </ul>
-        </nav>
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <div class="logo-img"></div>
+                    <div class="logo-text">EmpireHouse</div>
+                </div>
+                <div class="nav-buttons" id="loginButtons">
+                    <button onclick="location.href='client-login.html'" class="nav-btn">Client Login</button>
+                    <button onclick="location.href='staff-login.html'" class="nav-btn">Staff Login</button>
+                    <button onclick="location.href='signup.html'" class="nav-btn primary">Sign Up</button>
+                </div>
+            </nav>
+        </div>
     </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Professional Recording Studio</h1>
+            <p>State-of-the-art equipment, world-class acoustics, and professional engineers to bring your musical vision to life.</p>
+            <div class="hero-buttons">
+                <button onclick="location.href='signup.html'" class="btn btn-primary">Get Started - Sign Up Free</button>
+                <div style="display: flex; gap: 16px;">
+                    <button onclick="location.href='booking.html'" class="btn btn-secondary">Book Studio Session</button>
+                    <button onclick="location.href='rentals.html'" class="btn btn-outline">View Equipment</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="container">
+            <div class="stats-container">
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <h3>500+</h3>
+                        <p>Projects</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>98%</h3>
+                        <p>Satisfaction</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>24/7</h3>
+                        <p>Support</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>50+</h3>
+                        <p>Equipment</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services">
+        <div class="container">
+            <div class="section-header">
+                <h2>Our Services</h2>
+                <p>Professional audio services tailored to your needs</p>
+            </div>
+            <div class="services-grid">
+                <!-- Studio Recording -->
+                <div class="service-card">
+                    <div class="service-icon">🎤</div>
+                    <h3>Studio Recording</h3>
+                    <p>Professional recording in our acoustically treated studios with top-tier equipment.</p>
+                    <div class="service-price">From $150/hour</div>
+                    <ul class="feature-list">
+                        <li>Professional microphones</li>
+                        <li>Acoustic treatment</li>
+                        <li>Engineer included</li>
+                    </ul>
+                    <button class="service-btn" onclick="location.href='booking.html'">Get Started</button>
+                </div>
+
+                <!-- Mixing & Mastering -->
+                <div class="service-card">
+                    <div class="service-icon">🎚️</div>
+                    <h3>Mixing & Mastering</h3>
+                    <p>Expert mixing and mastering services to polish your tracks to perfection.</p>
+                    <div class="service-price">From $200/song</div>
+                    <ul class="feature-list">
+                        <li>Professional mixing</li>
+                        <li>Radio-ready mastering</li>
+                        <li>Unlimited revisions</li>
+                    </ul>
+                    <button class="service-btn" onclick="location.href='booking.html'">Get Started</button>
+                </div>
+
+                <!-- Equipment Rental -->
+                <div class="service-card">
+                    <div class="service-icon">🎧</div>
+                    <h3>Equipment Rental</h3>
+                    <p>Rent professional audio equipment for your home studio or live performances.</p>
+                    <div class="service-price">From $50/day</div>
+                    <ul class="feature-list">
+                        <li>Premium equipment</li>
+                        <li>Flexible rental terms</li>
+                        <li>Technical support</li>
+                    </ul>
+                    <button class="service-btn" onclick="location.href='rentals.html'">Get Started</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <h2>What Our Clients Say</h2>
+                <p>Don't just take our word for it</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="stars">
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                    </div>
+                    <p class="testimonial-text">EmpireHouse transformed my demo into a professional masterpiece. The engineers are incredibly talented and the equipment is top-notch.</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar"></div>
+                        <div class="author-info">
+                            <h4>Sarah Johnson</h4>
+                            <p>Independent Artist</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars">
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                    </div>
+                    <p class="testimonial-text">Outstanding service and incredible results. My album sounds better than I ever imagined possible.</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar"></div>
+                        <div class="author-info">
+                            <h4>Michael Chen</h4>
+                            <p>Music Producer</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Simple navigation handler
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        });
+    </script>
 </body>
 </html>
-

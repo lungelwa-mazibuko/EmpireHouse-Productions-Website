@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Confirmed - Empire House</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-bg: #1A1A1A;
+            --secondary-bg: #2A2A2A;
+            --accent-gold: #D4AF37;
+            --accent-red: #8B0000;
+            --success: #10B981;
+            --text-white: #FFFFFF;
+            --text-light: #CCCCCC;
+            --text-gray: #888888;
+            --border-color: #3A3A3A;
+        }
+
+        body {
+            background-color: var(--primary-bg);
+            color: var(--text-white);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--primary-bg);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 4px;
+            background: linear-gradient(45deg, var(--accent-gold), var(--accent-red));
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent-gold);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Confirmation Content */
+        .confirmation-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 0;
+        }
+
+        .confirmation-content {
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        .success-icon {
+            width: 120px;
+            height: 120px;
+            background: var(--success);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            color: var(--text-white);
+            font-size: 3rem;
+        }
+
+        .confirmation-title {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: var(--text-white);
+        }
+
+        .confirmation-message {
+            color: var(--text-light);
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        /* Booking Details Card */
+        .booking-card {
+            background: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .card-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--text-white);
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+        }
+
+        .detail-label {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        .detail-value {
+            color: var(--text-white);
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .detail-value.amount {
+            color: var(--accent-red);
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+
+        .divider {
+            height: 1px;
+            background: var(--border-color);
+            margin: 0.5rem 0;
+        }
+
+        /* Email Confirmation */
+        .email-confirmation {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: var(--accent-red);
+            color: var(--text-white);
+        }
+
+        .btn-primary:hover {
+            background: #A52A2A;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--accent-red);
+            border: 2px solid var(--accent-red);
+        }
+
+        .btn-outline:hover {
+            background: var(--accent-red);
+            color: var(--text-white);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .confirmation-container {
+                padding: 1rem 0;
+            }
+            
+            .confirmation-content {
+                padding: 0 1rem;
+            }
+            
+            .success-icon {
+                width: 100px;
+                height: 100px;
+                font-size: 2.5rem;
+            }
+            
+            .confirmation-title {
+                font-size: 1.75rem;
+            }
+            
+            .booking-card {
+                padding: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .detail-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.25rem;
+            }
+            
+            .btn {
+                padding: 0.875rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <div class="logo-img"></div>
+                    <div class="logo-text">EmpireHouse</div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Confirmation Content -->
+    <main class="confirmation-container">
+        <div class="container">
+            <div class="confirmation-content">
+                <!-- Success Icon -->
+                <div class="success-icon">✓</div>
+                
+                <!-- Confirmation Message -->
+                <h1 class="confirmation-title">Booking Confirmed!</h1>
+                <p class="confirmation-message">
+                    Thank you! Your booking has been successfully confirmed. We look forward to serving you.
+                </p>
+                
+                <!-- Booking Details Card -->
+                <div class="booking-card">
+                    <h2 class="card-title">Booking Details</h2>
+                    
+                    <div class="detail-row">
+                        <span class="detail-label">Reference Number</span>
+                        <span class="detail-value">BK-2024-001234</span>
+                    </div>
+                    <div class="divider"></div>
+                    
+                    <div class="detail-row">
+                        <span class="detail-label">Service</span>
+                        <span class="detail-value">Studio Recording</span>
+                    </div>
+                    <div class="divider"></div>
+                    
+                    <div class="detail-row">
+                        <span class="detail-label">Date & Time</span>
+                        <span class="detail-value">March 15, 2024 at 2:00 PM</span>
+                    </div>
+                    <div class="divider"></div>
+                    
+                    <div class="detail-row">
+                        <span class="detail-label">Duration</span>
+                        <span class="detail-value">2 hours</span>
+                    </div>
+                    <div class="divider"></div>
+                    
+                    <div class="detail-row">
+                        <span class="detail-label">Engineer</span>
+                        <span class="detail-value">John Martinez</span>
+                    </div>
+                    <div class="divider"></div>
+                    
+                    <div class="detail-row">
+                        <span class="detail-label">Total Amount</span>
+                        <span class="detail-value amount">$150.00</span>
+                    </div>
+                </div>
+                
+                <!-- Email Confirmation -->
+                <p class="email-confirmation">
+                    A confirmation email has been sent to your registered email address with all the booking details.
+                </p>
+                
+                <!-- Action Buttons -->
+                <div class="action-buttons">
+                    <button onclick="location.href='index.html'" class="btn btn-primary">Return to Home</button>
+                    <button onclick="location.href='profile.html'" class="btn btn-outline">View My Bookings</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Simple page interactions
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add any confirmation page specific JavaScript here
+            console.log('Confirmation page loaded');
+            
+            // You could add functionality to:
+            // 1. Display dynamic booking details from URL parameters
+            // 2. Send confirmation email via Firebase
+            // 3. Track conversion analytics
+        });
+    </script>
+</body>
+</html>

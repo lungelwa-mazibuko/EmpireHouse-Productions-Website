@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - Empire House</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-bg: #1A1A1A;
+            --secondary-bg: #2A2A2A;
+            --accent-gold: #D4AF37;
+            --accent-red: #8B0000;
+            --text-white: #FFFFFF;
+            --text-light: #CCCCCC;
+            --text-gray: #888888;
+            --border-color: #3A3A3A;
+            --success: #10B981;
+            --error: #EF4444;
+        }
+
+        body {
+            background-color: var(--primary-bg);
+            color: var(--text-white);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--primary-bg);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 4px;
+            background-image: url('https://images.unsplash.com/photo-1624895036835-6e7880ed118d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NTYyMDF8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NjE4MzQzMjV8&ixlib=rb-4.1.0&q=80&w=1080');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent-gold);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .nav-btn {
+            padding: 8px 16px;
+            background: transparent;
+            border: 1px solid var(--accent-gold);
+            color: var(--text-white);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-btn:hover {
+            background: var(--accent-gold);
+            color: var(--primary-bg);
+        }
+
+        .nav-btn.primary {
+            background: var(--accent-red);
+            border-color: var(--accent-red);
+        }
+
+        .nav-btn.primary:hover {
+            background: #A52A2A;
+            border-color: #A52A2A;
+        }
+
+        /* Profile Layout */
+        .profile-container {
+            display: flex;
+            min-height: calc(100vh - 70px);
+            margin-top: 70px;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: var(--secondary-bg);
+            border-right: 1px solid var(--border-color);
+            padding: 24px;
+        }
+
+        .user-info {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .user-avatar {
+            width: 80px;
+            height: 80px;
+            background: var(--accent-red);
+            border-radius: 50%;
+            margin: 0 auto 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-white);
+            font-size: 2rem;
+        }
+
+        .user-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        .user-badge {
+            background: rgba(139, 0, 0, 0.2);
+            color: var(--accent-red);
+            padding: 8px 12px;
+            border-radius: 12px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .nav-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            text-decoration: none;
+            color: var(--text-light);
+        }
+
+        .nav-item.active {
+            background: var(--accent-red);
+            color: var(--text-white);
+        }
+
+        .nav-item:not(.active):hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-item.logout {
+            color: var(--error);
+        }
+
+        .nav-item.logout:hover {
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        .nav-icon {
+            font-size: 1.25rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 24px 32px;
+            overflow-y: auto;
+        }
+
+        .page-title {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 32px;
+        }
+
+        .section {
+            margin-bottom: 32px;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .form-card {
+            background: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .form-grid {
+            display: grid;
+            gap: 20px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: var(--text-white);
+        }
+
+        .form-input {
+            padding: 12px 16px;
+            background: var(--primary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-white);
+            font-size: 1rem;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent-gold);
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: var(--accent-red);
+            color: var(--text-white);
+        }
+
+        .btn-primary:hover {
+            background: #A52A2A;
+        }
+
+        /* Bookings Section */
+        .bookings-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .booking-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .booking-info h4 {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .booking-info p {
+            color: var(--text-light);
+            font-size: 0.875rem;
+        }
+
+        .booking-status {
+            padding: 8px 12px;
+            border-radius: 16px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .status-confirmed {
+            background: var(--success);
+            color: var(--text-white);
+        }
+
+        .status-completed {
+            background: var(--text-light);
+            color: var(--primary-bg);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .profile-container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-buttons {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <div class="logo-img"></div>
+                    <div class="logo-text">EmpireHouse</div>
+                </div>
+                <div class="nav-buttons" id="loginButtons">
+                    <button onclick="location.href='index.html'" class="nav-btn">Home</button>
+                    <button onclick="location.href='booking.html'" class="nav-btn">Book Studio</button>
+                    <button onclick="logout()" class="nav-btn">Logout</button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Profile Content -->
+    <div class="profile-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="user-info">
+                <div class="user-avatar">👤</div>
+                <div class="user-name">John Doe</div>
+                <div class="user-badge">Premium Member</div>
+            </div>
+            
+            <div class="nav-menu">
+                <a href="#" class="nav-item active">
+                    <span class="nav-icon">👤</span>
+                    <span>Profile Information</span>
+                </a>
+                <a href="booking.html" class="nav-item">
+                    <span class="nav-icon">📅</span>
+                    <span>My Bookings</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <span class="nav-icon">🧾</span>
+                    <span>Billing History</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <span class="nav-icon">⚙️</span>
+                    <span>Account Settings</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <span class="nav-icon">❓</span>
+                    <span>Help & Support</span>
+                </a>
+                <a href="index.html" class="nav-item logout">
+                    <span class="nav-icon">🚪</span>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <h1 class="page-title">Profile Information</h1>
+            
+            <!-- Personal Details Section -->
+            <div class="section">
+                <h2 class="section-title">Personal Details</h2>
+                <div class="form-card">
+                    <form id="profileForm" class="form-grid">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="firstName" class="form-label">First Name</label>
+                                <input type="text" id="firstName" class="form-input" value="John" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName" class="form-label">Last Name</label>
+                                <input type="text" id="lastName" class="form-input" value="Doe" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" id="email" class="form-input" value="john.doe@email.com" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone" class="form-label">Phone Number</label>
+                            <input type="tel" id="phone" class="form-input" value="+1 (555) 123-4567" required>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">Update Profile</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Recent Bookings Section -->
+            <div class="section">
+                <h2 class="section-title">Recent Bookings</h2>
+                <div class="form-card">
+                    <div class="bookings-list">
+                        <!-- Booking 1 -->
+                        <div class="booking-item">
+                            <div class="booking-info">
+                                <h4>Studio Recording Session</h4>
+                                <p>March 15, 2024 at 2:00 PM</p>
+                            </div>
+                            <div class="booking-status status-confirmed">Confirmed</div>
+                        </div>
+                        
+                        <!-- Booking 2 -->
+                        <div class="booking-item">
+                            <div class="booking-info">
+                                <h4>Mixing & Mastering</h4>
+                                <p>February 8-10, 2024</p>
+                            </div>
+                            <div class="booking-status status-completed">Completed</div>
+                        </div>
+                        
+                        <!-- Booking 3 -->
+                        <div class="booking-item">
+                            <div class="booking-info">
+                                <h4>Equipment Rental</h4>
+                                <p>January 20-25, 2024</p>
+                            </div>
+                            <div class="booking-status status-completed">Completed</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Profile form handling
+        document.getElementById('profileForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            
+            // Simulate profile update
+            alert('Profile updated successfully!');
+            
+            // In a real app, you would send this data to your backend
+            console.log('Profile updated:', { firstName, lastName, email, phone });
+        });
+
+        // Logout function
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                // In a real app, you would clear authentication tokens
+                // and redirect to login page
+                window.location.href = 'index.html';
+            }
+        }
+
+        // Mobile menu toggle (for future implementation)
+        function toggleMobileMenu() {
+            const sidebar = document.querySelector('.sidebar');
+            sidebar.classList.toggle('mobile-open');
+        }
+    </script>
+</body>
+</html>

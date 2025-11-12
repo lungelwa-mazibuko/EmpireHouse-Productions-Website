@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equipment Rentals - Empire House</title>
+    <script type="module">
+        // Firebase configuration
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-analytics.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCgB3Gi-KbzhOln4F5RQGQbb1d2Lx2Y5EQ",
+            authDomain: "empire-house-productions.firebaseapp.com",
+            projectId: "empire-house-productions",
+            storageBucket: "empire-house-productions.firebasestorage.app",
+            messagingSenderId: "491578812797",
+            appId: "1:491578812797:web:57e61edb7e7d6ff3a60414",
+            measurementId: "G-2N04H460SP"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const auth = getAuth(app);
+
+        // Check authentication state
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                document.getElementById('loginButtons').innerHTML = `
+                    <button onclick="location.href='profile.html'" class="nav-btn">My Profile</button>
+                    <button onclick="logout()" class="nav-btn">Logout</button>
+                `;
+            }
+        });
+
+        window.logout = async () => {
+            try {
+                await signOut(auth);
+                location.reload();
+            } catch (error) {
+                console.error('Logout error:', error);
+            }
+        };
+
+        // Cart functionality
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        
+        window.addToCart = (item) => {
+            cart.push(item);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            showAlert(`${item.name} added to cart`);
+        };
+
+        window.showAlert = (message) => {
+            const alert = document.createElement('div');
+            alert.className = 'alert';
+            alert.textContent = message;
+            document.body.appendChild(alert);
+            
+            setTimeout(() => {
+                alert.remove();
+            }, 3000);
+        };
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-bg: #1A1A1A;
+            --secondary-bg: #2A2A2A;
+            --accent-gold: #D4AF37;
+            --accent-red: #8B0000;
+            --text-white: #FFFFFF;
+            --text-light: #CCCCCC;
+            --text-gray: #888888;
+            --border-color: #3A3A3A;
+            --success: #10B981;
+        }
+
+        body {
+            background-color: var(--primary-bg);
+            color: var(--text-white);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--primary-bg);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            height: 70px;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 4px;
+            background-image: url('https://images.unsplash.com/photo-1624895036835-6e7880ed118d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NTYyMDF8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NjE4MzQzMjV8&ixlib=rb-4.1.0&q=80&w=1080');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent-gold);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .nav-btn {
+            padding: 8px 16px;
+            background: transparent;
+            border: 1px solid var(--accent-gold);
+            color: var(--text-white);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-btn:hover {
+            background: var(--accent-gold);
+            color: var(--primary-bg);
+        }
+
+        .nav-btn.primary {
+            background: var(--accent-red);
+            border-color: var(--accent-red);
+        }
+
+        .nav-btn.primary:hover {
+            background: #A52A2A;
+            border-color: #A52A2A;
+        }
+
+        /* Page Content */
+        .page-content {
+            margin-top: 90px;
+            padding-bottom: 2rem;
+        }
+
+        .page-title {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 2rem;
+            color: var(--text-white);
+        }
+
+        /* Filters Section */
+        .filters-container {
+            background: var(--secondary-bg);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .filters-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .filter-label {
+            color: var(--text-light);
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .filter-select {
+            width: 100%;
+            padding: 12px;
+            background: var(--primary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-white);
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: var(--accent-gold);
+        }
+
+        .filter-select option {
+            background: var(--primary-bg);
+            color: var(--text-white);
+        }
+
+        .filters-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .apply-filters {
+            padding: 12px 24px;
+            background: var(--accent-red);
+            color: var(--text-white);
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .apply-filters:hover {
+            background: #A52A2A;
+        }
+
+        /* Equipment Grid */
+        .equipment-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .equipment-card {
+            background: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1rem;
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 400px;
+        }
+
+        .equipment-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .equipment-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--accent-gold);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            color: var(--primary-bg);
+            font-size: 1.5rem;
+        }
+
+        .equipment-name {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-white);
+        }
+
+        .equipment-description {
+            color: var(--text-light);
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .equipment-price {
+            font-size: 1.5rem;
+            color: var(--accent-red);
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .features-list {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .features-list li {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 0.25rem;
+            color: var(--text-light);
+            font-size: 0.8rem;
+        }
+
+        .features-list li::before {
+            content: "✓";
+            color: var(--success);
+            font-weight: bold;
+        }
+
+        .add-to-cart {
+            width: 100%;
+            padding: 10px;
+            background: var(--accent-red);
+            color: var(--text-white);
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .add-to-cart:hover {
+            background: #A52A2A;
+        }
+
+        /* Alert Styles */
+        .alert {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: var(--success);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            z-index: 1001;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .equipment-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filters-row {
+                grid-template-columns: 1fr;
+            }
+
+            .filters-actions {
+                flex-direction: column;
+            }
+
+            .apply-filters {
+                width: 100%;
+            }
+
+            .nav-buttons {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 15px;
+            }
+            
+            .page-title {
+                font-size: 1.75rem;
+            }
+            
+            .equipment-card {
+                min-height: 350px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <div class="logo-img"></div>
+                    <div class="logo-text">EmpireHouse</div>
+                </div>
+                <div class="nav-buttons" id="loginButtons">
+                    <button onclick="location.href='index.html'" class="nav-btn">Home</button>
+                    <button onclick="location.href='client-login.html'" class="nav-btn">Client Login</button>
+                    <button onclick="location.href='staff-login.html'" class="nav-btn">Staff Login</button>
+                    <button onclick="location.href='signup.html'" class="nav-btn primary">Sign Up</button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Page Content -->
+    <div class="container">
+        <div class="page-content">
+            <h1 class="page-title">Equipment Rentals</h1>
+
+            <!-- Filters Section -->
+            <div class="filters-container">
+                <div class="filters-row">
+                    <div class="filter-group">
+                        <label class="filter-label">Category</label>
+                        <select class="filter-select" id="categoryFilter">
+                            <option value="">All Categories</option>
+                            <option value="microphones">Microphones</option>
+                            <option value="monitors">Monitors</option>
+                            <option value="interfaces">Audio Interfaces</option>
+                            <option value="instruments">Instruments</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label class="filter-label">Price Range</label>
+                        <select class="filter-select" id="priceFilter">
+                            <option value="">Any Price Range</option>
+                            <option value="under500">Under R500</option>
+                            <option value="500-1000">R500 - R1000</option>
+                            <option value="1000-2000">R1000 - R2000</option>
+                            <option value="over2000">Over R2000</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="filters-row">
+                    <div class="filter-group">
+                        <label class="filter-label">Availability</label>
+                        <select class="filter-select" id="availabilityFilter">
+                            <option value="">All Items</option>
+                            <option value="now">Available Now</option>
+                            <option value="thisWeek">Available This Week</option>
+                            <option value="nextWeek">Available Next Week</option>
+                        </select>
+                    </div>
+                    <div class="filters-actions">
+                        <button class="apply-filters" onclick="applyFilters()">Apply Filters</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Equipment Grid -->
+            <div class="equipment-grid" id="equipmentGrid">
+                <!-- Neumann U87 Ai -->
+                <div class="equipment-card" data-category="microphones" data-price="800" data-availability="now">
+                    <div>
+                        <div class="equipment-icon">🎤</div>
+                        <h3 class="equipment-name">Neumann U87 Ai</h3>
+                        <p class="equipment-description">Professional studio condenser microphone</p>
+                        <div class="equipment-price">R800/day</div>
+                        <ul class="features-list">
+                            <li>XLR Output</li>
+                            <li>Phantom Power</li>
+                            <li>Shock Mount</li>
+                        </ul>
+                    </div>
+                    <button class="add-to-cart" onclick="addToCart({name: 'Neumann U87 Ai', price: 800, type: 'Microphone'})">Add to Cart</button>
+                </div>
+
+                <!-- Yamaha HS8 -->
+                <div class="equipment-card" data-category="monitors" data-price="450" data-availability="now">
+                    <div>
+                        <div class="equipment-icon">🔊</div>
+                        <h3 class="equipment-name">Yamaha HS8</h3>
+                        <p class="equipment-description">8-inch powered studio monitor</p>
+                        <div class="equipment-price">R450/day</div>
+                        <ul class="features-list">
+                            <li>120W Power</li>
+                            <li>XLR/TRS Input</li>
+                            <li>Room Control</li>
+                        </ul>
+                    </div>
+                    <button class="add-to-cart" onclick="addToCart({name: 'Yamaha HS8', price: 450, type: 'Monitor'})">Add to Cart</button>
+                </div>
+
+                <!-- Focusrite Scarlett 2i2 -->
+                <div class="equipment-card" data-category="interfaces" data-price="350" data-availability="now">
+                    <div>
+                        <div class="equipment-icon">🎛️</div>
+                        <h3 class="equipment-name">Focusrite Scarlett 2i2</h3>
+                        <p class="equipment-description">USB audio interface with 2 inputs</p>
+                        <div class="equipment-price">R350/day</div>
+                        <ul class="features-list">
+                            <li>2 XLR Inputs</li>
+                            <li>USB-C Connection</li>
+                            <li>Direct Monitor</li>
+                        </ul>
+                    </div>
+                    <button class="add-to-cart" onclick="addToCart({name: 'Focusrite Scarlett 2i2', price: 350, type: 'Audio Interface'})">Add to Cart</button>
+                </div>
+
+                <!-- Pearl Export Series -->
+                <div class="equipment-card" data-category="instruments" data-price="1200" data-availability="thisWeek">
+                    <div>
+                        <div class="equipment-icon">🥁</div>
+                        <h3 class="equipment-name">Pearl Export Series</h3>
+                        <p class="equipment-description">5-piece acoustic drum kit</p>
+                        <div class="equipment-price">R1200/day</div>
+                        <ul class="features-list">
+                            <li>5-Piece Kit</li>
+                            <li>Cymbals Included</li>
+                            <li>Hardware Set</li>
+                        </ul>
+                    </div>
+                    <button class="add-to-cart" onclick="addToCart({name: 'Pearl Export Series', price: 1200, type: 'Drum Kit'})">Add to Cart</button>
+                </div>
+
+                <!-- Fender Stratocaster -->
+                <div class="equipment-card" data-category="instruments" data-price="600" data-availability="now">
+                    <div>
+                        <div class="equipment-icon">🎸</div>
+                        <h3 class="equipment-name">Fender Stratocaster</h3>
+                        <p class="equipment-description">Electric guitar with amplifier</p>
+                        <div class="equipment-price">R600/day</div>
+                        <ul class="features-list">
+                            <li>Amp Included</li>
+                            <li>Cable & Picks</li>
+                            <li>Strap Included</li>
+                        </ul>
+                    </div>
+                    <button class="add-to-cart" onclick="addToCart({name: 'Fender Stratocaster', price: 600, type: 'Guitar'})">Add to Cart</button>
+                </div>
+
+                <!-- Audio-Technica ATH-M50x -->
+                <div class="equipment-card" data-category="monitors" data-price="200" data-availability="now">
+                    <div>
+                        <div class="equipment-icon">🎧</div>
+                        <h3 class="equipment-name">Audio-Technica ATH-M50x</h3>
+                        <p class="equipment-description">Professional monitor headphones</p>
+                        <div class="equipment-price">R200/day</div>
+                        <ul class="features-list">
+                            <li>Professional Sound</li>
+                            <li>Comfortable Fit</li>
+                            <li>Detachable Cable</li>
+                        </ul>
+                    </div>
+                    <button class="add-to-cart" onclick="addToCart({name: 'Audio-Technica ATH-M50x', price: 200, type: 'Headphones'})">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Filter functionality
+        function applyFilters() {
+            const categoryFilter = document.getElementById('categoryFilter').value;
+            const priceFilter = document.getElementById('priceFilter').value;
+            const availabilityFilter = document.getElementById('availabilityFilter').value;
+            
+            const equipmentCards = document.querySelectorAll('.equipment-card');
+            
+            equipmentCards.forEach(card => {
+                let showCard = true;
+                
+                // Category filter
+                if (categoryFilter && card.dataset.category !== categoryFilter) {
+                    showCard = false;
+                }
+                
+                // Price filter
+                if (priceFilter) {
+                    const price = parseInt(card.dataset.price);
+                    switch(priceFilter) {
+                        case 'under500':
+                            if (price >= 500) showCard = false;
+                            break;
+                        case '500-1000':
+                            if (price < 500 || price > 1000) showCard = false;
+                            break;
+                        case '1000-2000':
+                            if (price < 1000 || price > 2000) showCard = false;
+                            break;
+                        case 'over2000':
+                            if (price <= 2000) showCard = false;
+                            break;
+                    }
+                }
+                
+                // Availability filter
+                if (availabilityFilter && card.dataset.availability !== availabilityFilter) {
+                    showCard = false;
+                }
+                
+                // Show or hide card
+                card.style.display = showCard ? 'flex' : 'none';
+            });
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Any initialization code can go here
+        });
+    </script>
+</body>
+</html>

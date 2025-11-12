@@ -1,0 +1,382 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #1A1A1A;
+    color: #FFFFFF;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Navigation */
+.navbar {
+    background-color: #1A1A1A;
+    padding: 16px 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 4px;
+    object-fit: contain;
+}
+
+.brand-name {
+    color: #D4AF37;
+    font-weight: bold;
+    font-size: 1.25rem;
+}
+
+.nav-actions {
+    display: flex;
+    gap: 8px;
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: #8B0000;
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: #A52A2A;
+}
+
+.btn-primary.large {
+    padding: 16px 32px;
+    font-size: 1.1rem;
+}
+
+.btn-primary.full-width {
+    width: 100%;
+}
+
+.btn-outline {
+    background: transparent;
+    color: white;
+    border: 1px solid #D4AF37;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-outline:hover {
+    background-color: #D4AF37;
+    color: #1A1A1A;
+}
+
+.btn-outline-gold {
+    background: transparent;
+    color: #D4AF37;
+    border: 2px solid #D4AF37;
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s;
+}
+
+.btn-outline-gold:hover {
+    background-color: #D4AF37;
+    color: #1A1A1A;
+}
+
+.btn-outline-white {
+    background: rgba(0, 0, 0, 0.3);
+    color: white;
+    border: 1px solid white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s;
+}
+
+.btn-outline-white:hover {
+    background-color: white;
+    color: #1A1A1A;
+}
+
+/* Hero Section */
+.hero {
+    height: 600px;
+    position: relative;
+    margin-top: 70px;
+}
+
+.hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-content {
+    text-align: center;
+    padding: 32px;
+    max-width: 800px;
+}
+
+.hero-content h1 {
+    font-size: 48px;
+    font-weight: bold;
+    margin-bottom: 16px;
+    color: white;
+}
+
+.hero-content p {
+    font-size: 18px;
+    margin-bottom: 32px;
+    color: white;
+}
+
+.hero-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+}
+
+.secondary-actions {
+    display: flex;
+    gap: 16px;
+}
+
+/* Stats Section */
+.stats-section {
+    padding: 48px 32px;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    background-color: #2A2A2A;
+    padding: 12px;
+    border-radius: 8px;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-item h3 {
+    font-size: 36px;
+    color: #D4AF37;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.stat-item p {
+    color: white;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+/* Services Section */
+.services-section {
+    padding: 64px 32px;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 48px;
+}
+
+.section-header h2 {
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 16px;
+    color: white;
+}
+
+.section-header p {
+    font-size: 18px;
+    color: #CCCCCC;
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.service-card {
+    background-color: #2A2A2A;
+    border: 1px solid #3A3A3A;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.service-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+}
+
+.service-card h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: white;
+}
+
+.service-card p {
+    color: #CCCCCC;
+    margin-bottom: 16px;
+    line-height: 1.4;
+}
+
+.service-price {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #D4AF37;
+    margin-bottom: 16px;
+}
+
+.service-features {
+    list-style: none;
+    margin-bottom: 16px;
+}
+
+.service-features li {
+    color: #CCCCCC;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Testimonials Section */
+.testimonials-section {
+    padding: 64px 32px;
+    background-color: #2A2A2A;
+}
+
+.testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+}
+
+.testimonial-card {
+    background-color: #1A1A1A;
+    border: 1px solid #3A3A3A;
+    border-radius: 12px;
+    padding: 24px;
+}
+
+.stars {
+    color: #D4AF37;
+    margin-bottom: 16px;
+}
+
+.testimonial-card p {
+    color: #CCCCCC;
+    margin-bottom: 16px;
+    line-height: 1.4;
+}
+
+.testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.testimonial-author img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.testimonial-author div {
+    display: flex;
+    flex-direction: column;
+}
+
+.testimonial-author strong {
+    color: white;
+}
+
+.testimonial-author span {
+    color: #CCCCCC;
+    font-size: 0.875rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .nav-actions {
+        display: none;
+    }
+    
+    .hero-content h1 {
+        font-size: 32px;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .services-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .testimonials-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .secondary-actions {
+        flex-direction: column;
+    }
+}
